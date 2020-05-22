@@ -1,8 +1,8 @@
-# TonY [![CircleCI](https://circleci.com/gh/linkedin/TonY/tree/master.svg?style=svg)](https://circleci.com/gh/linkedin/TonY/tree/master)
+# TonY [![CircleCI](https://circleci.com/gh/linkedin/TonY/tree/master.svg?style=svg)](https://circleci.com/gh/linkedin/TonY/tree/master) ![master](https://github.com/goyalankit/TonY/workflows/master/badge.svg) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.linkedin.tony/tony-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.linkedin.tony/tony-core/)
+
+
 
 ![tony-logo-small](https://user-images.githubusercontent.com/544734/57793050-45b3ff00-76f5-11e9-8cc0-8ebb830b6e78.png)
-
-![master](https://github.com/goyalankit/TonY/workflows/master/badge.svg)
 
 TonY is a framework to _natively_ run deep learning jobs on [Apache Hadoop](http://hadoop.apache.org/).
 It currently supports [TensorFlow](https://github.com/tensorflow/tensorflow), [PyTorch](https://github.com/pytorch/pytorch), [MXNet](https://github.com/apache/incubator-mxnet) and [Horovod](https://github.com/horovod/horovod).
