@@ -18,23 +18,33 @@ jobs:
         java-version: 1.8
     - name: Configure GPG Key
       run: |
-        mkdir -p ~/.gnupg/
-        mkdir -p ~/.gradle
-        printf "$GPG_SIGNING_KEY" | base64 --decode > ~/.gnupg/private.key
-        gpg --batch --import ~/.gnupg/private.key
-        echo "signing.keyId=${GPG_KEY_ID}" >> ~/.gradle/gradle.properties
-        echo "signing.secretKeyRingFile=/home/runner/.gnupg/private.key" >> ~/.gradle/gradle.properties
-        echo "signing.password=${SIGNING_PASSWORD}" >> ~/.gradle/gradle.properties
-        echo "mavenUser=${MAVEN_USERNAME}" >> ~/.gradle/gradle.properties
-        echo "mavenPassword=${MAVEN_PASSWORD}" >> ~/.gradle/gradle.properties
-        echo "nexusUsername=${MAVEN_USERNAME}" >> ~/.gradle/gradle.properties
-        echo "nexusPassword=${MAVEN_PASSWORD}" >> ~/.gradle/gradle.properties
+        mkdir -p ${HOME}/.gnupg/ ${HOME}/.gradle
+        
+        # Decode and create the private key file
+        printf "$GPG_SIGNING_KEY" | base64 --decode > ${HOME}/.gnupg/private.key        
+        chmod 700 ${HOME}/.gnupg/private.key
+        
+        # Try importing the key.
+        gpg --batch --import ${HOME}/.gnupg/private.key
+        
+        # Create the gradle.properties file.        
+        cat > ${HOME}/.gradle/gradle.properties <<EOF
+        signing.keyId=${GPG_KEY_ID}"
+        signing.secretKeyRingFile=${HOME}/.gnupg/private.key
+        signing.password=${SIGNING_PASSWORD}
+        mavenUser=${MAVEN_USERNAME}
+        mavenPassword=${MAVEN_PASSWORD}
+        nexusUsername=${MAVEN_USERNAME}
+        nexusPassword=${MAVEN_PASSWORD}
+        EOF
+        
       env:
         GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
         SIGNING_PASSWORD: ${{ secrets.GPG_PF }}      
         MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}  
         MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}  
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
