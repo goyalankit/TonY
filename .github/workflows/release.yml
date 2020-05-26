@@ -29,7 +29,7 @@ jobs:
         
         # Create the gradle.properties file.        
         cat > ${HOME}/.gradle/gradle.properties <<EOF
-        signing.keyId=${GPG_KEY_ID}"
+        signing.keyId=${GPG_KEY_ID}
         signing.secretKeyRingFile=${HOME}/.gnupg/private.key
         signing.password=${SIGNING_PASSWORD}
         mavenUser=${MAVEN_USERNAME}
